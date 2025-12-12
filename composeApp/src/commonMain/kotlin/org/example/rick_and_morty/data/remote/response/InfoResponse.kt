@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class InfoResponse(
-    val pages:Int,
-    val next:String?,
-    val prev:String?
+    val pages: Int,
+    val next: String?,
+    val prev: String?
 )
