@@ -2,6 +2,7 @@ package org.example.rick_and_morty.ui.home.tabs.characters
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,7 +36,9 @@ fun CharactersScreen() {
     val charactersViewModel = koinViewModel<CharactersViewModel>()
     val state by charactersViewModel.state.collectAsState()
 
-    CharacterOfTheDay(state.characterOfTheDay)
+    Column(Modifier.fillMaxSize()) {
+        CharacterOfTheDay(state.characterOfTheDay)
+    }
 
 }
 

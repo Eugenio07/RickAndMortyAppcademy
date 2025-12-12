@@ -14,7 +14,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -24,9 +24,9 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-       tasks.register("testClasses")
+        tasks.register("testClasses")
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -40,10 +40,10 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.lifecycle.viewmodelCompose)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
+
             implementation(libs.navigation.compose)
-            implementation(libs.viewmodel.compose)
 
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.negotiation)
@@ -58,16 +58,12 @@ kotlin {
 
             implementation(libs.paging.compose.common)
             implementation(libs.paging.common)
-
-            implementation(libs.kotlinx.datetime)
-
-            implementation(libs.room.runtime)
-            implementation(libs.androidx.sqlite.bundled)
-
-            api(libs.compose.webview.multiplatform)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
 }

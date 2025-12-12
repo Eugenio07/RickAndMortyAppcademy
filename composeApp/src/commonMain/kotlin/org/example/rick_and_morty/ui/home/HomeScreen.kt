@@ -49,7 +49,6 @@ fun BottomNavigation(items: List<BottomBarItem>, navController: NavHostControlle
                     }
                 },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
-                alwaysShowLabel = false
             )
         }
     }
