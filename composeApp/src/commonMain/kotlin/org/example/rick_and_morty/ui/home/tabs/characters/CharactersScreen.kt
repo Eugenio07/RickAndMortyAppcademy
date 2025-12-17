@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -50,10 +51,6 @@ fun CharactersScreen() {
     val charactersViewModel = koinViewModel<CharactersViewModel>()
     val state by charactersViewModel.state.collectAsState()
     val characters = state.characters.collectAsLazyPagingItems()
-
-/*    Column(Modifier.fillMaxSize()) {
-        CharacterOfTheDay(state.characterOfTheDay)
-    }*/
     CharactersGridList(characters, state)
 }
 
@@ -65,9 +62,11 @@ fun CharactersGridList(characters: LazyPagingItems<CharacterModel>, state: Chara
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-
         item(span = { GridItemSpan(2) }) {
-            CharacterOfTheDay(state.characterOfTheDay)
+            Column {
+                Text("Characters", color = Color.Black, fontSize = 24.sp)
+                CharacterOfTheDay(state.characterOfTheDay)
+            }
         }
 
         when {
@@ -96,10 +95,11 @@ fun CharactersGridList(characters: LazyPagingItems<CharacterModel>, state: Chara
                     }
                 }
 
-                if (characters.loadState.refresh is LoadState.Loading) {
+                if (characters.loadState.append is LoadState.Loading) {
                     item(span = { GridItemSpan(2) }) {
                         Box(
-                            modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                            modifier = Modifier.fillMaxHeight().height(100.dp),
+                            contentAlignment = Alignment.Center
                         ) {
                             CircularProgressIndicator(Modifier.size(64.dp), color = Color.Red)
                         }
@@ -115,13 +115,13 @@ fun CharacterItemList(characterModel: CharacterModel) {
     Box(
         modifier = Modifier.clip(RoundedCornerShape(24))
             .border(
-                2.dp,
-                Color.Green,
+                width = 2.dp,
+                color = Color.Green,
                 shape = RoundedCornerShape(
-                    0,
-                    24,
-                    0,
-                    24
+                    topStartPercent = 0,
+                    topEndPercent = 24,
+                    bottomEndPercent = 0,
+                    bottomStartPercent = 24
                 )
             ).fillMaxWidth()
             .height(150.dp)
@@ -157,8 +157,8 @@ fun CharacterOfTheDay(characterModel: CharacterModel? = null) {
         modifier = Modifier.fillMaxWidth().height(400.dp), shape = RoundedCornerShape(12)
     ) {
         if (characterModel == null) {
-            Box(contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator(color = Color.Green)
             }
         } else {
             Box(contentAlignment = Alignment.BottomStart) {
@@ -178,14 +178,15 @@ fun CharacterOfTheDay(characterModel: CharacterModel? = null) {
                     )
                 )
                 Text(
-                    characterModel.name,
+                    text = characterModel.name,
                     fontSize = 40.sp,
                     maxLines = 1,
                     minLines = 1,
                     textAlign = TextAlign.Center,
                     color = Color.White,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp).vertical()
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+                        .fillMaxHeight().vertical()
                         .rotate(-90f)
                 )
             }
