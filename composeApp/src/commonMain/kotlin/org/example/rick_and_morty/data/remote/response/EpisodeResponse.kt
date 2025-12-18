@@ -32,19 +32,7 @@ data class EpisodeResponse(
         )
     }
 
-    private fun getVideoUrlFromSeason(season: SeasonEpisode): String {
-        return when (season) {
-            SEASON_1 -> "https://www.youtube.com/watch?v=8BEzj2kRjO8&ab_channel=RottenTomatoesTV"
-            SEASON_2 -> "https://www.youtube.com/watch?v=SXwf_9xJu5c&ab_channel=Yusuto"
-            SEASON_3 -> "https://www.youtube.com/watch?v=Bmg2vXOQ3kM&ab_channel=SeriesTrailerMP"
-            SEASON_4 -> "https://www.youtube.com/watch?v=bLI2-v264No&ab_channel=RottenTomatoesTV"
-            SEASON_5 -> "https://www.youtube.com/watch?v=yC1UxW8vcDo&ab_channel=RottenTomatoesTV"
-            SEASON_6 -> "https://www.youtube.com/watch?v=jerFRSQW9g8&ab_channel=RottenTomatoesTV"
-            SEASON_7 -> "https://www.youtube.com/watch?v=PkZtVBNkmso&ab_channel=RottenTomatoesTV"
-            SEASON_8 -> "https://www.youtube.com/watch?v=ySYnTO7leqI"
-            UNKNOWN -> "https://youtu.be/E8cXKMR9a1Q?si=G0i6q8XDb126U4I5"
-        }
-    }
+
 
     private fun getSeasonFromEpisodeCode(episode: String): SeasonEpisode {
         return when {
@@ -60,3 +48,5 @@ data class EpisodeResponse(
         }
     }
 }
+expect fun getVideoUrlFromSeason(season: SeasonEpisode): String
+
