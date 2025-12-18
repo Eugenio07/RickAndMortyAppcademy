@@ -6,18 +6,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -29,6 +28,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -38,6 +38,8 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import org.example.rick_and_morty.domain.model.CharacterModel
+import org.example.rick_and_morty.ui.core.BackgroundPrimaryColor
+import org.example.rick_and_morty.ui.core.DefaultTextColor
 import org.example.rick_and_morty.ui.core.components.PagingLoadingState
 import org.example.rick_and_morty.ui.core.ex.vertical
 import org.jetbrains.compose.resources.painterResource
@@ -48,32 +50,47 @@ import rickandmortyappcademy.composeapp.generated.resources.rickface
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-fun CharactersScreen() {
+fun CharactersScreen(navigateToDetail: (CharacterModel) -> Unit) {
     val charactersViewModel = koinViewModel<CharactersViewModel>()
     val state by charactersViewModel.state.collectAsState()
     val characters = state.characters.collectAsLazyPagingItems()
-    CharactersGridList(characters, state)
+    CharactersGridList(
+        characters = characters,
+        state = state,
+        navigateToDetail = navigateToDetail
+    )
 }
 
 @Composable
-fun CharactersGridList(characters: LazyPagingItems<CharacterModel>, state: CharactersState) {
+fun CharactersGridList(
+    characters: LazyPagingItems<CharacterModel>,
+    state: CharactersState,
+    navigateToDetail: (CharacterModel) -> Unit,
+) {
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BackgroundPrimaryColor)
+            .padding(horizontal = 16.dp),
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item(span = { GridItemSpan(2) }) {
             Column {
-                Text("Characters", color = Color.Black, fontSize = 24.sp)
+                Text(
+                    text = "Characters",
+                    color = DefaultTextColor,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(Modifier.height(6.dp))
                 CharacterOfTheDay(state.characterOfTheDay)
             }
         }
 
         when {
-
             characters.loadState.refresh is LoadState.Loading && characters.itemCount == 0 -> {
-                //Carga inicial
                 item(span = { GridItemSpan(2) }) {
                     PagingLoadingState()
                 }
@@ -81,16 +98,16 @@ fun CharactersGridList(characters: LazyPagingItems<CharacterModel>, state: Chara
 
             characters.loadState.refresh is LoadState.NotLoading && characters.itemCount == 0 -> {
                 item {
-                    //API vacía
                     Text("No hay personajes :(")
                 }
             }
 
             else -> {
-                //Recorreremos los items
                 items(characters.itemCount) { pos ->
                     characters[pos]?.let { characterModel ->
-                        CharacterItemList(characterModel)
+                        CharacterItemList(characterModel) { character ->
+                            navigateToDetail(character)
+                        }
                     }
                 }
 
@@ -100,7 +117,7 @@ fun CharactersGridList(characters: LazyPagingItems<CharacterModel>, state: Chara
                             modifier = Modifier.fillMaxHeight().height(100.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            CircularProgressIndicator(Modifier.size(64.dp), color = Color.Red)
+                            PagingLoadingState()
                         }
                     }
                 }
@@ -110,7 +127,10 @@ fun CharactersGridList(characters: LazyPagingItems<CharacterModel>, state: Chara
 }
 
 @Composable
-fun CharacterItemList(characterModel: CharacterModel) {
+fun CharacterItemList(
+    characterModel: CharacterModel,
+    onItemSelected: (CharacterModel) -> Unit
+) {
     Box(
         modifier = Modifier.clip(RoundedCornerShape(24))
             .border(
@@ -124,7 +144,7 @@ fun CharacterItemList(characterModel: CharacterModel) {
                 )
             ).fillMaxWidth()
             .height(150.dp)
-            .clickable { },
+            .clickable { onItemSelected(characterModel) },
         contentAlignment = Alignment.BottomCenter
     ) {
         AsyncImage(
@@ -157,7 +177,7 @@ fun CharacterOfTheDay(characterModel: CharacterModel? = null) {
     ) {
         if (characterModel == null) {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                CircularProgressIndicator(color = Color.Green)
+                PagingLoadingState()
             }
         } else {
             Box(contentAlignment = Alignment.BottomStart) {

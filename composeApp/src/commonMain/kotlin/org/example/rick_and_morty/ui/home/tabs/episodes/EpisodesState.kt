@@ -5,4 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import org.example.rick_and_morty.domain.model.EpisodeModel
 
-data class EpisodesState(val characters: Flow<PagingData<EpisodeModel>> = emptyFlow())
+data class EpisodesState(
+    val characters: Flow<PagingData<EpisodeModel>> = emptyFlow(),
+    val playVideo: String = ""
+)

@@ -3,8 +3,15 @@ package org.example.rick_and_morty.data.remote.response
 import kotlinx.serialization.Serializable
 import org.example.rick_and_morty.domain.model.EpisodeModel
 import org.example.rick_and_morty.domain.model.SeasonEpisode
-
-import org.example.rick_and_morty.domain.model.SeasonEpisode.*
+import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_1
+import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_2
+import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_3
+import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_4
+import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_5
+import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_6
+import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_7
+import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_8
+import org.example.rick_and_morty.domain.model.SeasonEpisode.UNKNOWN
 
 @Serializable
 data class EpisodeResponse(
