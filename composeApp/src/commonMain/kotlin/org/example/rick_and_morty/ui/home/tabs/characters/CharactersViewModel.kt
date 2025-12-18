@@ -2,8 +2,7 @@ package org.example.rick_and_morty.ui.home.tabs.characters
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import org.example.rick_and_morty.domain.GetRandomCharacter
-import org.example.rick_and_morty.domain.model.CharacterModel
+import androidx.paging.cachedIn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +10,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.example.rick_and_morty.domain.GetRandomCharacter
 import org.example.rick_and_morty.domain.Repository
+import org.example.rick_and_morty.domain.model.CharacterModel
 
 class CharactersViewModel(
     val getRandomCharacter: GetRandomCharacter,
@@ -34,7 +35,7 @@ class CharactersViewModel(
     private fun getAllCharacters() {
         _state.update { state ->
             state.copy(
-                characters = repository.getAllCharacters()
+                characters = repository.getAllCharacters().cachedIn(viewModelScope)
             )
         }
     }

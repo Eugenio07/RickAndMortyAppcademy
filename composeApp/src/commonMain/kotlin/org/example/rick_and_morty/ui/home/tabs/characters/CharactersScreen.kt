@@ -38,6 +38,7 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import org.example.rick_and_morty.domain.model.CharacterModel
+import org.example.rick_and_morty.ui.core.components.PagingLoadingState
 import org.example.rick_and_morty.ui.core.ex.vertical
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -74,9 +75,7 @@ fun CharactersGridList(characters: LazyPagingItems<CharacterModel>, state: Chara
             characters.loadState.refresh is LoadState.Loading && characters.itemCount == 0 -> {
                 //Carga inicial
                 item(span = { GridItemSpan(2) }) {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(Modifier.size(64.dp), color = Color.Red)
-                    }
+                    PagingLoadingState()
                 }
             }
 

@@ -11,6 +11,7 @@ import io.ktor.http.URLProtocol
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.example.rick_and_morty.data.remote.paging.CharactersPagingSource
+import org.example.rick_and_morty.data.remote.paging.EpisodesPagingSource
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -33,7 +34,9 @@ val dataModule = module {
     factory<Repository> { RepositoryImpl(
         api = get(),
         charactersPagingSource = get(),
-        rickMortyDatabase = get()
+        rickMortyDatabase = get(),
+        episodesPagingSource = get()
     ) }
     factoryOf(::CharactersPagingSource)
+    factoryOf(::EpisodesPagingSource)
 }
