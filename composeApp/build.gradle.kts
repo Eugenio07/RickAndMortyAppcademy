@@ -1,3 +1,4 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -21,7 +22,10 @@ kotlin {
         }
     }
 
+    jvm("desktop")
+
     listOf(
+        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
@@ -32,6 +36,8 @@ kotlin {
     }
 
     sourceSets {
+        val desktopMain by getting
+
         tasks.register("testClasses")
         androidMain.dependencies {
             implementation(compose.preview)
@@ -76,6 +82,12 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.ktor.client.cio)
         }
     }
 }
@@ -123,9 +135,21 @@ ksp{
 dependencies{
     add("kspCommonMainMetadata", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
-  //  add("kspIosX64", libs.room.compiler)
+    add("kspDesktop", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
+}
+
+compose.desktop{
+    application{
+        mainClass = "org.example.rick_and_morty.MainKt"
+        nativeDistributions{
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "org.example.rick_and_morty"
+            version = "1.0.0"
+        }
+    }
 }
 
 

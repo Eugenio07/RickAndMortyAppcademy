@@ -11,18 +11,22 @@ import org.example.rick_and_morty.ui.detail.CharacterDetailScreen
 import org.example.rick_and_morty.ui.home.HomeScreen
 
 @Composable
-fun NavigationWrapper(){
+fun NavigationWrapper() {
     val mainNavController = rememberNavController()
 
-    NavHost(navController = mainNavController, startDestination = Routes.Home.route){
-        composable(route = Routes.Home.route){
+    NavHost(navController = mainNavController, startDestination = Routes.Home.route) {
+        composable(route = Routes.Home.route) {
             HomeScreen(mainNavController)
         }
 
         composable<CharacterDetail> { navBackStackEntry ->
-            val characterDetailEncoding: CharacterDetail = navBackStackEntry.toRoute<CharacterDetail>()
-            val characterModel: CharacterModel = Json.decodeFromString<CharacterModel>(characterDetailEncoding.characterModel)
-            CharacterDetailScreen(characterModel)
+            val characterDetailEncoding: CharacterDetail =
+                navBackStackEntry.toRoute<CharacterDetail>()
+            val characterModel: CharacterModel =
+                Json.decodeFromString<CharacterModel>(characterDetailEncoding.characterModel)
+            CharacterDetailScreen(
+                characterModel = characterModel,
+                onBackPressed = { mainNavController.popBackStack() })
         }
     }
 

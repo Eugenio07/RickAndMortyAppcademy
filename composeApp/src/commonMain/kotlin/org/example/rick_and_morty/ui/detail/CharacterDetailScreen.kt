@@ -2,6 +2,7 @@ package org.example.rick_and_morty.ui.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import org.example.rick_and_morty.domain.model.CharacterModel
 import org.example.rick_and_morty.domain.model.EpisodeModel
+import org.example.rick_and_morty.isDesktop
 import org.example.rick_and_morty.ui.core.BackgroundPrimaryColor
 import org.example.rick_and_morty.ui.core.BackgroundSecondaryColor
 import org.example.rick_and_morty.ui.core.BackgroundTertiaryColor
@@ -48,11 +51,12 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.parameter.parameterSetOf
 import rickandmortyappcademy.composeapp.generated.resources.Res
+import rickandmortyappcademy.composeapp.generated.resources.ic_back
 import rickandmortyappcademy.composeapp.generated.resources.space
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-fun CharacterDetailScreen(characterModel: CharacterModel) {
+fun CharacterDetailScreen(characterModel: CharacterModel, onBackPressed: () -> Unit) {
 
     val characterDetailViewModel =
         koinViewModel<CharacterDetailViewModel>(parameters = { parameterSetOf(characterModel) })
@@ -64,7 +68,7 @@ fun CharacterDetailScreen(characterModel: CharacterModel) {
         modifier = Modifier.fillMaxSize().background(BackgroundPrimaryColor)
             .verticalScroll(scrollState)
     ) {
-        MainHeader(state.characterModel)
+        MainHeader(state.characterModel, onBackPressed)
         Spacer(Modifier.height(16.dp))
         Column(
             modifier = Modifier.fillMaxSize()
@@ -136,7 +140,7 @@ fun InformationDetail(title: String, detail: String) {
 }
 
 @Composable
-fun MainHeader(characterModel: CharacterModel) {
+fun MainHeader(characterModel: CharacterModel, onBackPressed: () -> Unit) {
     Box(modifier = Modifier.fillMaxWidth().height(300.dp)) {
         Image(
             painter = painterResource(Res.drawable.space),
@@ -144,6 +148,17 @@ fun MainHeader(characterModel: CharacterModel) {
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
+        if (isDesktop()) {
+            Icon(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .size(24.dp)
+                    .clickable { onBackPressed() },
+                painter = painterResource(Res.drawable.ic_back),
+                contentDescription = null,
+                tint = Color.White
+            )
+        }
         CharacterHeader(characterModel)
     }
 }
