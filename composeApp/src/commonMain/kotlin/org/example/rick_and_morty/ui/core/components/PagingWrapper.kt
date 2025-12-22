@@ -25,6 +25,7 @@ fun <T : Any> PagingWrapper(
     initialView: @Composable () -> Unit = {},
     emptyView: @Composable () -> Unit = {},
     extraItemsView: @Composable () -> Unit = {},
+    header: @Composable () -> Unit = {},
 ) {
 
     when {
@@ -39,13 +40,10 @@ fun <T : Any> PagingWrapper(
         else -> {
             when (pagingType) {
                 ROW -> {
-                    LazyRow {
-                        items(pagingItems.itemCount) { pos ->
-                            pagingItems[pos]?.let { item ->
-                                itemView(item)
-                            }
-                        }
-                    }
+                    LazyRowTarget(
+                        pagingItems = pagingItems,
+                        itemView = itemView
+                    )
                 }
 
                 COLUMN -> {
@@ -59,13 +57,7 @@ fun <T : Any> PagingWrapper(
                 }
 
                 VERTICAL_GRID -> {
-                    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-                        items(pagingItems.itemCount) { pos ->
-                            pagingItems[pos]?.let { item ->
-                                itemView(item)
-                            }
-                        }
-                    }
+                    LazyVerticalGridTarget(pagingItems, itemView, header)
                 }
             }
 

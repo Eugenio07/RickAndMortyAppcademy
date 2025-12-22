@@ -79,9 +79,7 @@ fun EpisodesScreen() {
             initialView = { PagingLoadingState() },
             itemView = {
                 EpisodeItemList(it) { url ->
-                    episodesViewModel.onPlaySelected(
-                        url
-                    )
+                    episodesViewModel.onPlaySelected(url)
                 }
             })
         EpisodePlayer(state.playVideo) { episodesViewModel.onCloseVideo() }
