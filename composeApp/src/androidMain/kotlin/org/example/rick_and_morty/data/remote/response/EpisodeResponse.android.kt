@@ -8,7 +8,6 @@ import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_4
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_5
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_6
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_7
-import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_8
 import org.example.rick_and_morty.domain.model.SeasonEpisode.UNKNOWN
 
 actual fun getVideoUrlFromSeason(season: SeasonEpisode): String {
@@ -20,7 +19,6 @@ actual fun getVideoUrlFromSeason(season: SeasonEpisode): String {
         SEASON_5 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp.appspot.com/o/RICK%20Y%20MORTY%20(Trailer%20espan%CC%83ol)%20(1).mp4?alt=media&token=b7f5ef8f-aa58-4451-9d6c-b1ed83d7ba31"
         SEASON_6 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp.appspot.com/o/RICK%20Y%20MORTY%20(Trailer%20espan%CC%83ol)%20(1).mp4?alt=media&token=b7f5ef8f-aa58-4451-9d6c-b1ed83d7ba31"
         SEASON_7 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp.appspot.com/o/RICK%20Y%20MORTY%20(Trailer%20espan%CC%83ol)%20(1).mp4?alt=media&token=b7f5ef8f-aa58-4451-9d6c-b1ed83d7ba31"
-        SEASON_8 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp.appspot.com/o/RICK%20Y%20MORTY%20(Trailer%20espan%CC%83ol)%20(1).mp4?alt=media&token=b7f5ef8f-aa58-4451-9d6c-b1ed83d7ba31"
         UNKNOWN -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp.appspot.com/o/RICK%20Y%20MORTY%20(Trailer%20espan%CC%83ol)%20(1).mp4?alt=media&token=b7f5ef8f-aa58-4451-9d6c-b1ed83d7ba31"
     }
 }

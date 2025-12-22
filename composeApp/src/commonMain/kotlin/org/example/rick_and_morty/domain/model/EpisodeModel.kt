@@ -17,6 +17,5 @@ enum class SeasonEpisode {
     SEASON_5,
     SEASON_6,
     SEASON_7,
-    SEASON_8,
     UNKNOWN,
 }

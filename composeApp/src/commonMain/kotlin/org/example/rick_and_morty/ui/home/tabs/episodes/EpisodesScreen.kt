@@ -39,8 +39,8 @@ import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_4
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_5
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_6
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_7
-import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_8
 import org.example.rick_and_morty.domain.model.SeasonEpisode.UNKNOWN
+import org.example.rick_and_morty.isDesktop
 import org.example.rick_and_morty.ui.core.BackgroundPrimaryColor
 import org.example.rick_and_morty.ui.core.DefaultTextColor
 import org.example.rick_and_morty.ui.core.PlaceholderColor
@@ -90,11 +90,12 @@ fun EpisodesScreen() {
 fun EpisodePlayer(playVideo: String, onCloseVideo: () -> Unit) {
     AnimatedContent(playVideo.isNotBlank()) { condition ->
         if (condition) {
+            val height = if(isDesktop()) 600.dp else 250.dp
             ElevatedCard(
-                modifier = Modifier.fillMaxWidth().height(250.dp).padding(16.dp)
+                modifier = Modifier.fillMaxWidth().height(height).padding(16.dp)
                     .border(3.dp, Color.Green, CardDefaults.elevatedShape)
             ) {
-                Box(modifier = Modifier.background(Color.Black)) {
+                Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
                     Box(modifier = Modifier.padding(16.dp), contentAlignment = Alignment.Center) {
                         VideoPlayer(Modifier.fillMaxWidth().height(200.dp), playVideo)
                     }
@@ -157,7 +158,6 @@ fun getSeasonImage(seasonEpisode: SeasonEpisode): DrawableResource {
         SEASON_5 -> Res.drawable.season5
         SEASON_6 -> Res.drawable.season6
         SEASON_7 -> Res.drawable.season7
-        SEASON_8 -> Res.drawable.season7
         UNKNOWN -> Res.drawable.season1
     }
 }

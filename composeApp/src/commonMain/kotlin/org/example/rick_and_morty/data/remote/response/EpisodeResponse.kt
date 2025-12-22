@@ -10,7 +10,6 @@ import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_4
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_5
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_6
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_7
-import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_8
 import org.example.rick_and_morty.domain.model.SeasonEpisode.UNKNOWN
 
 @Serializable
@@ -43,7 +42,6 @@ data class EpisodeResponse(
             episode.startsWith("S05") -> SEASON_5
             episode.startsWith("S06") -> SEASON_6
             episode.startsWith("S07") -> SEASON_7
-            episode.startsWith("S08") -> SEASON_8
             else -> UNKNOWN
         }
     }

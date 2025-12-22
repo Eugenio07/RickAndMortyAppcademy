@@ -8,7 +8,6 @@ import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_4
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_5
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_6
 import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_7
-import org.example.rick_and_morty.domain.model.SeasonEpisode.SEASON_8
 import org.example.rick_and_morty.domain.model.SeasonEpisode.UNKNOWN
 
 actual fun getVideoUrlFromSeason(season: SeasonEpisode): String {
@@ -20,7 +19,6 @@ actual fun getVideoUrlFromSeason(season: SeasonEpisode): String {
         SEASON_5 -> "https://www.youtube.com/watch?v=yC1UxW8vcDo&ab_channel=RottenTomatoesTV"
         SEASON_6 -> "https://www.youtube.com/watch?v=jerFRSQW9g8&ab_channel=RottenTomatoesTV"
         SEASON_7 -> "https://www.youtube.com/watch?v=PkZtVBNkmso&ab_channel=RottenTomatoesTV"
-        SEASON_8 -> "https://www.youtube.com/watch?v=ySYnTO7leqI"
         UNKNOWN -> "https://youtu.be/E8cXKMR9a1Q?si=G0i6q8XDb126U4I5"
     }
 }
