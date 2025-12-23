@@ -63,6 +63,7 @@ fun main() = application {
             if (initialized) {
                 initKoin()
                 App()
+               // UtilsScreen()
             } else {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
